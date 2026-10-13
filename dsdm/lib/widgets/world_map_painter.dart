@@ -26,20 +26,24 @@ class WorldMapPainter extends StatelessWidget {
             final x = detalhes.localPosition.dx / largura;
             final y = detalhes.localPosition.dy / altura;
 
-            // Áreas aproximadas para selecionar cada região.
-            if (x < 0.36 && y > 0.20 && y < 0.58) {
+            // Each colored land area selects the matching editorial feed.
+            if (y < 0.12 && x > 0.3 && x < 0.72) {
+              aoSelecionar('Mundo');
+            } else if (x >= 0.56 && x < 0.72 && y > 0.42 && y < 0.62) {
+              aoSelecionar('Oriente Médio');
+            } else if (x < 0.38 && y > 0.14 && y < 0.96) {
               aoSelecionar('Américas');
             } else if (x >= 0.36 &&
-                x < 0.56 &&
-                y > 0.18 &&
-                y < 0.39) {
+                x < 0.57 &&
+                y > 0.14 &&
+                y < 0.43) {
               aoSelecionar('Europa');
             } else if (x >= 0.39 &&
-                x < 0.61 &&
-                y >= 0.39 &&
-                y < 0.76) {
+                x < 0.62 &&
+                y >= 0.40 &&
+                y < 0.96) {
               aoSelecionar('África');
-            } else if (x >= 0.56 && y > 0.18 && y < 0.58) {
+            } else if (x >= 0.56 && y > 0.14 && y < 0.62) {
               aoSelecionar('Ásia-Pacífico');
             } else if (x >= 0.61 && y >= 0.58) {
               aoSelecionar('Ásia-Pacífico');
@@ -71,6 +75,7 @@ class ContinentesPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final escala = size.width / 300;
+    final isWorld = regiaoSelecionada == 'Mundo';
 
     canvas.save();
     canvas.scale(escala, escala);
@@ -171,6 +176,16 @@ class ContinentesPainter extends CustomPainter {
       ..lineTo(241, 153)
       ..close();
 
+    // Oriente Médio, separado do restante da Ásia para permitir seleção no mapa.
+    final orienteMedio = Path()
+      ..moveTo(178, 77)
+      ..lineTo(193, 75)
+      ..lineTo(207, 83)
+      ..lineTo(202, 94)
+      ..lineTo(188, 97)
+      ..lineTo(179, 90)
+      ..close();
+
     final pequenaIlha = Path()
       ..moveTo(103, 28)
       ..quadraticBezierTo(112, 22, 121, 28)
@@ -182,37 +197,43 @@ class ContinentesPainter extends CustomPainter {
       canvas,
       americaNorte,
       azul,
-      regiaoSelecionada == 'Américas',
+      regiaoSelecionada == 'Américas' || isWorld,
     );
     _desenharRegiao(
       canvas,
       americaSul,
-      verde,
-      regiaoSelecionada == 'Oriente Médio',
+      azul,
+      regiaoSelecionada == 'Américas' || isWorld,
     );
     _desenharRegiao(
       canvas,
       europa,
       mapaLaranja,
-      regiaoSelecionada == 'Europa',
+      regiaoSelecionada == 'Europa' || isWorld,
     );
     _desenharRegiao(
       canvas,
       africa,
       amarelo,
-      regiaoSelecionada == 'África',
+      regiaoSelecionada == 'África' || isWorld,
     );
     _desenharRegiao(
       canvas,
       asia,
       roxo,
-      regiaoSelecionada == 'Ásia-Pacífico',
+      regiaoSelecionada == 'Ásia-Pacífico' || isWorld,
+    );
+    _desenharRegiao(
+      canvas,
+      orienteMedio,
+      verde,
+      regiaoSelecionada == 'Oriente Médio' || isWorld,
     );
     _desenharRegiao(
       canvas,
       oceania,
       rosa,
-      regiaoSelecionada == 'Ásia-Pacífico',
+      regiaoSelecionada == 'Ásia-Pacífico' || isWorld,
     );
     _desenharRegiao(
       canvas,
@@ -225,6 +246,7 @@ class ContinentesPainter extends CustomPainter {
     _texto(canvas, 'América\\ndo Sul', 83, 130, 8);
     _texto(canvas, 'Europa', 137, 44, 8);
     _texto(canvas, 'África', 147, 111, 9);
+    _texto(canvas, 'Oriente\\nMédio', 193, 81, 5.5);
     _texto(canvas, 'Ásia', 218, 61, 9);
     _texto(canvas, 'Oceania', 246, 145, 8);
 
