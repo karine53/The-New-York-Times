@@ -20,6 +20,14 @@ class MyApp extends StatelessWidget {
       animation: controller,
       builder: (context, _) {
         final dark = controller.darkMode;
+        final pageTransitionsTheme = controller.reduceMotion
+            ? PageTransitionsTheme(
+                builders: {
+                  for (final platform in TargetPlatform.values)
+                    platform: const _NoAnimationPageTransitionsBuilder(),
+                },
+              )
+            : const PageTransitionsTheme();
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'World News Map',
@@ -36,6 +44,7 @@ class MyApp extends StatelessWidget {
               backgroundColor: Color(0xFFF2F6FA),
               foregroundColor: Color(0xFF10243A),
             ),
+            pageTransitionsTheme: pageTransitionsTheme,
           ),
           darkTheme: ThemeData(
             useMaterial3: true,
@@ -49,15 +58,8 @@ class MyApp extends StatelessWidget {
               backgroundColor: Color(0xFF071B2D),
               foregroundColor: Colors.white,
             ),
+            pageTransitionsTheme: pageTransitionsTheme,
           ),
-          pageTransitionsTheme: controller.reduceMotion
-              ? PageTransitionsTheme(
-                  builders: {
-                    for (final platform in TargetPlatform.values)
-                      platform: const _NoAnimationPageTransitionsBuilder(),
-                  },
-                )
-              : const PageTransitionsTheme(),
           builder: (context, child) => MediaQuery(
             data: MediaQuery.of(context).copyWith(
               textScaler: TextScaler.linear(controller.largeText ? 1.12 : 1),
