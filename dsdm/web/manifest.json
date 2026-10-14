@@ -1,11 +1,11 @@
 {
-    "name": "dsdm",
-    "short_name": "dsdm",
+    "name": "World News Map",
+    "short_name": "News Map",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#071B2D",
+    "theme_color": "#071B2D",
+    "description": "Notícias do New York Times organizadas por região.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
