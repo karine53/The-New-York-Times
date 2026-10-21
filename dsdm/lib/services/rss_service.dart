@@ -16,6 +16,7 @@ class RssService {
       throw const FormatException('Endereço de feed RSS inválido.');
     }
 
+//requisição HTTP para obter o conteúdo do endereço selecionado
     final response = await http
         .get(
           uri,
@@ -31,7 +32,10 @@ class RssService {
       );
     }
 
+//Essa linha transforma a resposta recebida em um documento XML que o código consegue percorrer.
     final document = XmlDocument.parse(utf8.decode(response.bodyBytes));
+
+//Essa linha procura os elementos <item>, que representam as notícias individuais no feed RSS.
     final items = document.findAllElements('item');
 
     return items
