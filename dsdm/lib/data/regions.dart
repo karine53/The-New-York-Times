@@ -4,9 +4,7 @@ final regions = [
   RegionFeed(
     name: 'África',
     url: 'https://rss.nytimes.com/services/xml/rss/nyt/Africa.xml',
-    // Feeds RSS usados para buscar notícias, separados por regiões do mundo.
-    // xml organiza os dados das notícias em uma estrutura que o aplicativo consegue ler.
-    // rss fornece o conteudo da noticia 
+  
   ),
   RegionFeed(
     name: 'Américas',
